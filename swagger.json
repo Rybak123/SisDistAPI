@@ -1,0 +1,108 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Esta es mi primera API y estoy haciendo su documentación",
+    "version": "1.0.0",
+    "title": "Ejemplo API",
+    "contact": {
+      "email": "mail@univalle.edu"
+    },
+    "license": {
+      "name": "MIT"
+    }
+  },
+  "host": "localhost",
+  "basePath": "/univalle/v1",
+  "tags": [
+    {
+      "name": "students",
+      "description": "Everything about the students"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/students": {
+      "get": {
+        "tags": [
+          "students"
+        ],
+        "summary": "Listado de los estudiantes",
+        "description": "",
+        "operationId": "list",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "list"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "student"
+        ],
+        "summary": "Add a new student to the store",
+        "description": "",
+        "operationId": "addStudent",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "student object that needs to be added to the store",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/student"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "student created"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "student": {
+      "type": "object",
+      "required": [
+        "name",
+        "age"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "name": {
+          "type": "string",
+          "example": "Juan"
+        },
+        "image": {
+          "type": "string",
+          "description": "URL de la imagen del estudiante "
+        },
+        "age": {
+          "type": "integer"
+        },
+        "phone": {
+          "type": "string",
+          "description": "phone´s student "
+        }
+      }
+    }
+  }
+}
