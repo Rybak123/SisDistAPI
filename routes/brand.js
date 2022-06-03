@@ -28,7 +28,7 @@ function coneccionDeBaseDeDatos(){
       })
       return mysqlConnection;
 }
-router.get('/ingresarMarca', async (req, res) => {
+router.post('/addbrand', async (req, res) => {
     var mysqlConnection = coneccionDeBaseDeDatos()
     let sql = `INSERT INTO branddb(Brand) VALUES ('${req.body.new}') `
     let query = mysqlConnection.query(sql, (err, rows, fields) => {
@@ -42,14 +42,14 @@ router.get('/ingresarMarca', async (req, res) => {
       console.log(err)
       })
 })
-router.get('/ingresarMarca', async (req, res) => {
+router.get('/brands', async (req, res) => {
     var mysqlConnection = coneccionDeBaseDeDatos()
     let sql2 = 'SELECT * FROM branddb'
     let query2 = mysqlConnection.query(sql2, (err2, rows2, fields2)=>{
       if(!err2)
       {
         res.json({
-            rows:rows
+            rows2:rows2
         })
       }
       else
@@ -57,7 +57,8 @@ router.get('/ingresarMarca', async (req, res) => {
   })
 })
 
-router.get('/ingresarMarca', async (req, res) => {
+router.post('/deletebrand', async (req, res) => {
+  var mysqlConnection = coneccionDeBaseDeDatos()
     console.log('deletebrand called')
     var deleteid = req.body.deleteid
     let sql = 'DELETE FROM branddb WHERE Brand = ?'
@@ -65,7 +66,9 @@ router.get('/ingresarMarca', async (req, res) => {
       if(!err)
       {
       console.log('Successfully deleted a brand')
-     
+      res.json({
+        rows:rows
+      })
       
       }
       else

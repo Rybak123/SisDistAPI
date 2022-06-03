@@ -26,7 +26,7 @@ function coneccionDeBaseDeDatos(){
       })
       return mysqlConnection;
 }
-router.get('/', async (req, res) => {
+router.get('/viewstocks', async (req, res) => {
     var mysqlConnection = coneccionDeBaseDeDatos()
 
 let sql = 'SELECT * FROM stockdb ORDER BY TYear DESC,Tmonth DESC, TDay DESC,StockTime DESC';
@@ -59,8 +59,7 @@ let query = mysqlConnection.query(sql, (err, rows, fields)=>{
 });
 })
 
-router.get('/stocksQueryFilter', async (req, res) => {
-    console.log(req);
+router.post('/stocks_query', async (req, res) => {
     var mysqlConnection = coneccionDeBaseDeDatos()
     let sql = 'SELECT * FROM stockdb ORDER BY TYear DESC,Tmonth DESC, TDay DESC,StockTime DESC';
     let query = mysqlConnection.query(sql, (err, rows, fields)=>{
@@ -172,7 +171,7 @@ router.get('/stock_filter_query', async (req, res) => {
 
 router.get('/stocks', async (req, res) => {
     let sql1 = 'SELECT * FROM categorydb'
-    
+    var mysqlConnection = coneccionDeBaseDeDatos()
     let query1 = mysqlConnection.query(sql1, (err1, rows1, fields1)=>{
       if(!err1)
       {
@@ -205,10 +204,9 @@ router.get('/stocks', async (req, res) => {
     })
 })
 
-router.get('/submitStocks', async (req, res) => {
-    console.log(req.body)
-    var request1 = req.body
-
+router.post('/submitStocks', async (req, res) => {
+    var request1 = req.body.cuerpo
+    var mysqlConnection = coneccionDeBaseDeDatos()
     var date_format = new Date();
     var transaction_date = date_format.getDate()+ '/'+ (parseInt(date_format.getMonth()+1)).toString() +'/'+date_format.getFullYear()
     console.log((parseInt(date_format.getMonth()+1)).toString())
@@ -245,7 +243,9 @@ router.get('/submitStocks', async (req, res) => {
       if(!err)
       {
       console.log('Successfully inserted values')
-     
+        res.json({
+          rows:rows
+        })
       }
       else
       console.log(err);
@@ -253,7 +253,7 @@ router.get('/submitStocks', async (req, res) => {
 
 })
 
-router.get('/deleteStock', async (req, res) => {
+router.post('/deletestock', async (req, res) => {
     var mysqlConnection = coneccionDeBaseDeDatos()
     console.log('deleteitem called')
     var deleteid = req.body.deleteid
@@ -263,7 +263,9 @@ router.get('/deleteStock', async (req, res) => {
       {
       console.log('Successfully deleted a value')
      
-      
+      res.json({
+        rows:rows
+      })
       }
       else
       console.log(err);

@@ -27,7 +27,7 @@ function routerApi(app) {
     router.use('/billing', billing)
     router.use('/category', category)
     router.use('/brand', brand)
-    router.use('/size', size)
+    router.use('/sizes', size)
 }
 
 module.exports = routerApi

@@ -28,7 +28,7 @@ function coneccionDeBaseDeDatos(){
       })
       return mysqlConnection;
 }
-router.get('/ingresarSize', async (req, res) => {
+router.post('/addsize', async (req, res) => {
 
     
     var mysqlConnection = coneccionDeBaseDeDatos()
@@ -45,21 +45,22 @@ router.get('/ingresarSize', async (req, res) => {
       console.log(err)
       })
 })
-router.get('/ingresarSize', async (req, res) => {
+router.get('/sizes', async (req, res) => {
     var mysqlConnection = coneccionDeBaseDeDatos()
     let sql2 = 'SELECT * FROM sizedb'
     let query2 = mysqlConnection.query(sql2, (err2, rows2, fields2)=>{
       if(!err2)
       {
         res.json({
-            rows2:rows
+            rows2:rows2
         })
       }
       else
       console.log(err2)
     })
 })
-router.get('/deleteSize', async (req, res) => {
+router.post('/deletesize', async (req, res) => {
+  var mysqlConnection = coneccionDeBaseDeDatos()
     console.log('deletesize called')
     var deleteid = req.body.deleteid
     let sql = 'DELETE FROM sizedb WHERE Size = ?'
@@ -68,7 +69,9 @@ router.get('/deleteSize', async (req, res) => {
     {
     console.log('Successfully deleted a size')
     
-    
+    res.json({
+      rows:rows
+    })
     }
     else
     console.log(err);

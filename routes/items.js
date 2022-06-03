@@ -28,9 +28,12 @@ function coneccionDeBaseDeDatos(){
       })
       return mysqlConnection;
 }
-router.get('/fetchItems', async (req, res) => {
+router.post('/fetchitem', async (req, res) => {
     var mysqlConnection = coneccionDeBaseDeDatos()
     item_id = req.body.itemid;
+    console.log(req)
+    console.log(req)
+    console.log(req)
     let sql = 'SELECT * FROM stockdb WHERE ItemID = ?'
     let query = mysqlConnection.query(sql, [item_id], (err, rows, fields)=>{
       if(!err)

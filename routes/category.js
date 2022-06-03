@@ -28,11 +28,8 @@ function coneccionDeBaseDeDatos(){
       })
       return mysqlConnection;
 }
-router.get('/ingresarCategoria', async (req, res) => {
-
-    
+router.post('/addcategory', async (req, res) => {
     var mysqlConnection = coneccionDeBaseDeDatos()
-
     let sql = `INSERT INTO categorydb(Category) VALUES ('${req.body.new}') `
     let query = mysqlConnection.query(sql, (err, rows, fields) => {
       if(!err)
@@ -45,7 +42,7 @@ router.get('/ingresarCategoria', async (req, res) => {
       console.log(err)
       })
 })
-router.get('/', async (req, res) => {
+router.get('/categories', async (req, res) => {
     var mysqlConnection = coneccionDeBaseDeDatos()
     let sql1 = 'SELECT * FROM categorydb'
     let query1 = mysqlConnection.query(sql1, (err1, rows1, fields1)=>{
@@ -59,7 +56,8 @@ router.get('/', async (req, res) => {
       console.log(err1)
   })
 })
-router.get('/deleteCOtegory', async (req, res) => {
+router.post('/deletecategory', async (req, res) => {
+  var mysqlConnection = coneccionDeBaseDeDatos()
     console.log('deletecategory called')
     var deleteid = req.body.deleteid
     let sql = 'DELETE FROM categorydb WHERE Category = ?'
@@ -67,7 +65,9 @@ router.get('/deleteCOtegory', async (req, res) => {
     if(!err)
     {
     console.log('Successfully deleted a category')
-    
+    res.json({
+      rows:rows
+    })
     
     }
     else

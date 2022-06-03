@@ -28,7 +28,7 @@ function coneccionDeBaseDeDatos(){
       })
       return mysqlConnection;
 }
-router.get('/', async (req, res) => {
+router.get('/billing', async (req, res) => {
     var mysqlConnection = coneccionDeBaseDeDatos()
     let sql1 = 'SELECT * FROM categorydb'
     let query1 = mysqlConnection.query(sql1, (err1, rows1, fields1)=>{
@@ -62,10 +62,11 @@ router.get('/', async (req, res) => {
         console.log(err1)
     })
 })
-router.get('/submitBill', async (req, res) => {
+router.post('/submitbill', async (req, res) => {
+  var mysqlConnection = coneccionDeBaseDeDatos()
     console.log(`\nRequest body = `)
 console.log(req.body)
-var request1 = req.body
+var request1 = req.body.cuerpo
 
 var date_format = new Date();
 var transaction_date = date_format.getDate()+ '/' +(parseInt(date_format.getMonth()+1)).toString() + '/'+ date_format.getFullYear()
@@ -116,6 +117,10 @@ let query = mysqlConnection.query(sql,[ data], (err, rows, fields)=>{
       if(!err2)
       {
       console.log('Successfully deleted corresponding values from stockdb')
+        res.json({
+          rows:rows,
+          rows2:rows2
+        })
       }
       else
       console.log(err2);
