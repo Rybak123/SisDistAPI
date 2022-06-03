@@ -112,7 +112,7 @@ router.post('/orders_query', async (req, res) => {
 })
 router.post('/deleteitem', async (req, res) => {
     var mysqlConnection = coneccionDeBaseDeDatos()
-    console.log(req.body)
+    console.log(req)
 
     var deleteid = req.body.deleteid
     let sql = 'DELETE FROM ordersdb WHERE ItemID = ?'
