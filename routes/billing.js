@@ -68,6 +68,7 @@ router.post('/submitbill', async (req, res) => {
 console.log(req.body)
 var request1 = req.body.cuerpo
 
+
 var date_format = new Date();
 var transaction_date = date_format.getDate()+ '/' +(parseInt(date_format.getMonth()+1)).toString() + '/'+ date_format.getFullYear()
 var transaction_time = date_format.getHours() + ':' + date_format.getMinutes() + ':' + date_format.getSeconds()
@@ -81,6 +82,7 @@ for(i in request1) {
     item_ids.push(request1[i])
   }
 }
+console.log(item_ids)
 
   for (i in request1){
   if(i.includes("number") || i.includes("total")){
